@@ -4,7 +4,9 @@
 FROM alpine:latest
 
 # File Author / Maintainer
-MAINTAINER Nick Lalumiere <nlalumiere@lifecare.com>
+LABEL name="LifeCare PHP"
+LABEL maintainer="Nick Lalumiere <nlalumiere@lifecare.com>"
+LABEL git-commit=$GIT_COMMIT
 
 # Update Repos
 #RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.8/main > /etc/apk/repositories; \
