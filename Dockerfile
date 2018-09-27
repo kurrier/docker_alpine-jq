@@ -4,10 +4,10 @@
 FROM alpine:3.8
 
 # File Author / Maintainer
-LABEL name="LifeCare JQ"
-LABEL maintainer="Nick Lalumiere <nlalumiere@lifecare.com>"
-LABEL version=$JQ_VERSION
-LABEL git-commit=$GIT_COMMIT
+LABEL name="LifeCare JQ" \
+      maintainer="Nick Lalumiere <nlalumiere@lifecare.com>" \
+      version=$JQ_VERSION \
+      git-commit=$GIT_COMMIT
 
 # Update Repos and Install curl/jq
 RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.8/main > /etc/apk/repositories && \

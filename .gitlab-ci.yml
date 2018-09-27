@@ -43,9 +43,10 @@ build_docker_image:
 
 test_docker_image:
   stage: test
+  image: $TEST_IMAGE:$BUILD_TAG
   script:
     - >
-      docker run -t --name ${CONTAINER_NAME} --rm $TEST_IMAGE:$BUILD_TAG jq | grep "Example"
+      curl -k -X GET https://gitlab.lifecare.com/api/v4/version | jq .message
       && (echo 'Idempotence test: pass' && exit 0)
       || (echo 'Idempotence test: fail' && exit 1)
     - >
