@@ -13,7 +13,6 @@ LABEL name="LifeCare JQ" \
 RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.8/main > /etc/apk/repositories && \
     echo http://mirror.yandex.ru/mirrors/alpine/v3.8/community >> /etc/apk/repositories && \
     apk update && \
-    apk upgrade && \
     apk add --no-cache curl && \
     apk add --no-cache jq && \
     addgroup -g 1000 jq && \

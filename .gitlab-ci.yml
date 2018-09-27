@@ -41,21 +41,21 @@ build_docker_image:
   only:
     - tags
 
-test_docker_image:
-  stage: test
-  image: $TEST_IMAGE:$BUILD_TAG
-  script:
-    - >
-      curl -k -X GET https://gitlab.lifecare.com/api/v4/version | jq .message
-      && (echo 'Idempotence test: pass' && exit 0)
-      || (echo 'Idempotence test: fail' && exit 1)
-    - >
-    - docker rm -f ${CONTAINER_NAME}
-  tags:
-    - docker
-  only:
-    - tags
-  when: on_success
+#test_docker_image:
+#  stage: test
+#  image: $TEST_IMAGE:$BUILD_TAG
+#  script:
+#    - >
+#      curl -k -X GET https://gitlab.lifecare.com/api/v4/version | jq .message
+#      && (echo 'Idempotence test: pass' && exit 0)
+#      || (echo 'Idempotence test: fail' && exit 1)
+#    - >
+#    - docker rm -f ${CONTAINER_NAME}
+#  tags:
+#    - docker
+#  only:
+#    - tags
+#  when: on_success
 
 deploy_docker_image:
   stage: deploy
