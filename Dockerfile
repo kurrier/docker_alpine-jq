@@ -1,7 +1,7 @@
 # jq Image
 
 # Set the base image to Busybox
-FROM alpine:latest
+FROM alpine:3.8
 
 # File Author / Maintainer
 LABEL name="LifeCare JQ"
