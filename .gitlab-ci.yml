@@ -70,7 +70,8 @@ deploy_docker_image:
 release_docker_image:
   stage: release
   script:
-    - docker tag $TEST_IMAGE:$BUILD_TAG $RELEASE_IMAGE:${BUILD_TAG}
+    - export VERSION=${BUILD_TAG}
+    - docker tag $TEST_IMAGE:$BUILD_TAG $RELEASE_IMAGE:${VERSION}
     - docker push $RELEASE_IMAGE:${VERSION}
     - docker tag $RELEASE_IMAGE:${VERSION} $RELEASE_IMAGE:latest
     - docker image rm -f $RELEASE_IMAGE:${VERSION}
