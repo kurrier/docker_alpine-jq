@@ -35,7 +35,7 @@ build_docker_image:
   stage: build
   script:
     - docker pull $registry/$organization/$CI_PROJECT_NAME
-    - docker build --build-arg GIT_COMMIT=${CI_COMMIT_SHA} --pull -t $TEST_IMAGE:$BUILD_TAG .
+    - docker build --build-arg JQ_VERSION=${BUILD_TAG} --build-arg GIT_COMMIT=${CI_COMMIT_SHA} --pull -t $TEST_IMAGE:$BUILD_TAG .
   tags:
     - docker
   only:
