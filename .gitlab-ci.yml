@@ -53,7 +53,22 @@ syntax_check:
   before_script:
     - echo "Scanning Image"
   script:
-    - image_scanning
+    - echo "Adding image to Anchore engine at ${ANCHORE_CLI_URL}"
+    - anchore-cli image add ${ANCHORE_SCAN_IMAGE}
+    - echo "Waiting for analysis to complete"
+    - counter=0
+    - while (! (anchore-cli image get ${ANCHORE_SCAN_IMAGE} | grep Status\:\ analyzed) > /dev/null) ; do echo -n "." ; sleep 10 ; if [ $counter -eq ${ANCHORE_RETRIES} ] ; then echo " Timeout waiting for analysis" ; exit 1 ; fi ; counter=$(($counter+1)) ; done
+    - echo "Analysis complete"
+    - echo "Producing reports"
+    - anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} os > image-packages.json
+    - anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} npm > image-npm.json
+    - anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} gem > image-gem.json
+    - anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} python > image-python.json
+    - anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} java > image-java.json
+    - anchore-cli --json image vuln ${ANCHORE_SCAN_IMAGE} os > image-vulnerabilities.json
+    - anchore-cli --json image get ${ANCHORE_SCAN_IMAGE} > image-details.json
+    - anchore-cli --json evaluate check ${ANCHORE_SCAN_IMAGE} --detail > image-policy.json || true
+    - if [ "${ANCHORE_FAIL_ON_POLICY}" == "true" ] ; then anchore-cli evaluate check ${ANCHORE_SCAN_IMAGE}  ; fi 
   artifacts:
     name: "$CI_JOB_NAME"
     paths:
@@ -122,35 +137,3 @@ cleanup_docker_build:
   when: always 
   allow_failure: true
 
-# ---------------------------------------------------------------------------
-
-.auto_devops: &auto_devops |
-  # Auto DevOps variables and functions
- 
-  function image_scanning() {
-    echo "Adding image to Anchore engine at ${ANCHORE_CLI_URL}"
-    anchore-cli image add ${TEST_IMAGE}
-    echo "Waiting for analysis to complete"
-    counter=0
-    while (! (anchore-cli image get ${ANCHORE_SCAN_IMAGE} | grep Status\:\ analyzed) > /dev/null) ;
-      do echo -n "." ; sleep 10 ; 
-        if [ $counter -eq ${ANCHORE_RETRIES} ] ; 
-          then echo " Timeout waiting for analysis" ; 
-          exit 1 ; 
-        fi ; 
-      counter=$(($counter+1)) ; 
-    done
-    echo "Analysis complete"
-    echo "Producing reports"
-    anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} os > image-packages.json
-    anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} npm > image-npm.json
-    anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} gem > image-gem.json
-    anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} python > image-python.json
-    anchore-cli --json image content ${ANCHORE_SCAN_IMAGE} java > image-java.json
-    anchore-cli --json image vuln ${ANCHORE_SCAN_IMAGE} os > image-vulnerabilities.json
-    anchore-cli --json image get ${ANCHORE_SCAN_IMAGE} > image-details.json
-    anchore-cli --json evaluate check ${ANCHORE_SCAN_IMAGE} --detail > image-policy.json || true
-    if [ "${ANCHORE_FAIL_ON_POLICY}" == "true" ] ; 
-      then anchore-cli evaluate check ${ANCHORE_SCAN_IMAGE}  ; 
-    fi
-  }
