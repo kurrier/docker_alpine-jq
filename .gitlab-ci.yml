@@ -47,7 +47,7 @@ syntax_check:
     ANCHORE_CLI_URL: "http://slxdockerbuild01:8160/v1"
     ANCHORE_CLI_USER: "admin"
     ANCHORE_CLI_PASS: "testpass123"
-    ANCHORE_SCAN_IMAGE: $TEST_IMAGE:$BUILD_TAG
+    ANCHORE_SCAN_IMAGE: ${TEST_IMAGE}:${BUILD_TAG}
     ANCHORE_CLI_SSL_VERIFY: "false"
     ANCHORE_RETRIES: 12
     ANCHORE_FAIL_ON_POLICY: "true"
