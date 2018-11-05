@@ -104,7 +104,7 @@ release_docker_image:
 cleanup_docker_build:
   stage: cleanup
   script:
-    - docker image rm -f $TEST_IMAGE:$BUILD_TAG
+    - docker image rm -f $TEST_IMAGE
   tags:
     - docker
   only:
