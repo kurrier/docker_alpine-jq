@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/kurrier/docker_alpine-jq.svg?branch=master)](https://travis-ci.org/kurrier/docker_alpine-jq)
-
-# Alpine JQ
+# Alpine JQ [![Build Status](https://travis-ci.org/kurrier/docker_alpine-jq.svg?branch=master)](https://travis-ci.org/kurrier/docker_alpine-jq)
 
 A quick and easy Docker image to run curl/jq. Very helpful for API testing or CI platforms.
 
