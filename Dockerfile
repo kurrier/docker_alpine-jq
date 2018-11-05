@@ -1,18 +1,16 @@
-# jq Image
+# Alpine jq Image
 
-# Set the base image to Busybox
 FROM alpine:3.8
 
 # File Author / Maintainer
-LABEL name="LifeCare JQ" \
-      maintainer="Nick Lalumiere <nlalumiere@lifecare.com>" \
+LABEL name="Alpine-JQ" \
+      maintainer="Nick Lalumiere <kurrier@thelysium.com>" \
       version=$JQ_VERSION \
       git-commit=$GIT_COMMIT
 
 # Update Repos and Install curl/jq
-RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.8/main > /etc/apk/repositories && \
-    echo http://mirror.yandex.ru/mirrors/alpine/v3.8/community >> /etc/apk/repositories && \
-    apk update && \
+RUN echo http://dl-cdn.alpinelinux.org/alpine/v3.8/main > /etc/apk/repositories && \
+    echo http://dl-cdn.alpinelinux.org/alpine/v3.8/community >> /etc/apk/repositories && \
     apk add --no-cache curl && \
     apk add --no-cache jq && \
     addgroup -g 1000 jq && \
