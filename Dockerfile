@@ -1,6 +1,6 @@
 # Alpine jq Image
 
-FROM alpine:3.8
+FROM alpine:3.9
 
 # File Author / Maintainer
 LABEL name="Alpine-JQ" \
@@ -9,14 +9,14 @@ LABEL name="Alpine-JQ" \
       git-commit=$GIT_COMMIT
 
 # Update Repos and Install curl/jq
-RUN echo http://dl-cdn.alpinelinux.org/alpine/v3.8/main > /etc/apk/repositories && \
-    echo http://dl-cdn.alpinelinux.org/alpine/v3.8/community >> /etc/apk/repositories && \
+RUN echo http://dl-cdn.alpinelinux.org/alpine/v3.9/main > /etc/apk/repositories && \
+    echo http://dl-cdn.alpinelinux.org/alpine/v3.9/community >> /etc/apk/repositories && \
     apk add --no-cache curl && \
     apk add --no-cache jq && \
     addgroup -g 1000 jq && \
     adduser -D -u 1000 -s /bin/sh -G jq jq
 
-ENV JQ_VERSION="2.0"
+ENV JQ_VERSION="3.0"
 
 # User
 USER jq
