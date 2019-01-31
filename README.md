@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/kurrier/docker_alpine-jq.svg?branch=master)](https://travis-ci.org/kurrier/docker_alpine-jq) [![Anchore Image Overview](https://anchore.io/service/badges/image/11c8312196fa651ff29a6e171bd9726a8dfd9f838fec915db18f742e073ac617)](https://anchore.io/image/dockerhub/kurrier%2Falpine-jq%3Alatest)
+[![Build Status](https://travis-ci.org/kurrier/docker_alpine-jq.svg?branch=master)](https://travis-ci.org/kurrier/docker_alpine-jq)
 # Alpine JQ 
 
 A quick and easy Docker image to run curl/jq. Very helpful for API testing or CI platforms.
